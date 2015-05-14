@@ -1,0 +1,14 @@
+.loading {
+  background-color: $background-inverse;
+  color: $brand-primary;
+  text-align: center;
+}
+.loading .logo {
+  margin-bottom: 50px;
+}
+.loading path {
+  stroke-width: 5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke: $brand-primary;
+}

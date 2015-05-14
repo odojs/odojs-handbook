@@ -1,0 +1,14 @@
+.error {
+  background-color: $background-inverse;
+  color: $brand-primary;
+  text-align: center;
+}
+.error .logo {
+  margin-bottom: 50px;
+}
+.error path {
+  stroke-width: 5;
+  stroke-linejoin: round;
+  stroke-linecap: round;
+  stroke: $brand-primary;
+}
