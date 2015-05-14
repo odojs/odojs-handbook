@@ -3,7 +3,7 @@ ql = require 'odoql'
 
 module.exports = component
   query: (params) ->
-    test: ql.concat 'Hel', 'lo'
+    test: ql.concat('Hel', ql.if(ql.gt(6, 5), 'lo World', 'lo'))
   render: (state, params) ->
     dom 'div', { attributes: class: 'wrapper' }, [
       svg 'svg', { attributes: class: 'logo' }, [

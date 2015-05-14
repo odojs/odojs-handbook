@@ -8,7 +8,7 @@ ql = require('odoql');
 module.exports = component({
   query: function(params) {
     return {
-      test: ql.concat('Hel', 'lo')
+      test: ql.concat('Hel', ql["if"](ql.gt(6, 5), 'lo World', 'lo'))
     };
   },
   render: function(state, params) {
