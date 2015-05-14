@@ -1,6 +1,3 @@
-body = document.querySelector 'body'
-body.removeChild body.lastChild while body.lastChild
-
 hub = require 'odo-hub'
 window.hub = hub
 scene = require './scene'

@@ -28,7 +28,7 @@ inject.bind('page:error', component({
           }
         }, [
           svg('use', {
-            'xlink:href': "/odojs-examples-1.0.0.min.svg#odojs"
+            'xlink:href': "/dist/odojs-examples-1.0.0.min.svg#odojs"
           })
         ]), dom('div', [dom('p', params.page.message), dom('p', params.page.details)])
       ])

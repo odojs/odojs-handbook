@@ -20,7 +20,9 @@ Router = component
   query: (params) ->
     getpage(params).query params
   render: (state, params) ->
-    getpage(params) state, params
+    dom '#root', [
+      getpage(params) state, params
+    ]
 
 inject.bind 'router', Router
 

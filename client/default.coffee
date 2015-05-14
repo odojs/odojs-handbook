@@ -7,7 +7,7 @@ module.exports = component
   render: (state, params) ->
     dom 'div', { attributes: class: 'wrapper' }, [
       svg 'svg', { attributes: class: 'logo' }, [
-        svg 'use', { 'xlink:href': "/odojs-examples-1.0.0.min.svg#odojs" }
+        svg 'use', { 'xlink:href': "/dist/odojs-examples-1.0.0.min.svg#odojs" }
       ]
       dom 'div', state.test
     ]

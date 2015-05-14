@@ -8,7 +8,7 @@ bodyParser = require 'body-parser'
 app.use bodyParser.urlencoded extended: yes
 app.use bodyParser.json()
 oneDay = 1000 * 60 * 60 * 24
-app.use express.static path.join(__dirname, '..', 'client', 'dist'), maxAge: oneDay
+app.use express.static path.join(__dirname, '..', 'client'), maxAge: oneDay
 
 # app.get '/query', (req, res) ->
 #   query = JSON.parse req.query.q
@@ -25,6 +25,8 @@ oneshot = require 'odo-relay/oneshot'
 odoql = require 'odoql/odojs'
 component.use odoql
 widget.use odoql
+stringify = require 'odojs/stringify'
+component.use odoql
 
 exe = require 'odoql-exe'
 exe = exe()
@@ -41,27 +43,28 @@ app.get '/*', (req, res) ->
       <!DOCTYPE html>
       <html>
         <head>
-          <meta charset=\"utf-8\">
-          <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge, chrome=1\" />
-          <meta name=\"viewport\" content=\"width=700\">
+          <meta charset="utf-8">
+          <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
+          <meta name="viewport" content="width=700">
           <title>Odo.js Examples</title>
-          <link rel=\"stylesheet\" href=\"/odojs-examples-1.0.0.min.css\" />
+          <link rel="stylesheet" href="/dist/odojs-examples-1.0.0.min.css" />
         </head>
         <body>
-          <div class=\"loading wrapper\">
-            <svg class=\"logo\">
-              <use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/odojs-examples-1.0.0.min.svg#odojs\"></use>
+          <div id="loading" class="wrapper">
+            <svg class="logo">
+              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/dist/odojs-examples-1.0.0.min.svg#odojs"></use>
             </svg>
-            <div class=\"timeout\" style=\"display: none;\">
+            <div class="timeout" style="display: none;">
               <h1>Loading too slow, something is wrong</h1>
             </div>
           </div>
-          <script src=\"/loading.js\"></script>
+          <script src="/dist/loading.js"></script>
           <script>
             window.__queries = #{JSON.stringify result.queries};
             window.__state = #{JSON.stringify result.state};
           </script>
-          <script src=\"/odojs-examples-1.0.0.min.js\"></script>
+          <div id="root" style="display: none;">#{result.html}</div>
+          <script src="/dist/odojs-examples-1.0.0.min.js"></script>
         </body>
       </html>
     """

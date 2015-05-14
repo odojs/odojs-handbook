@@ -33,7 +33,7 @@ Router = component({
     return getpage(params).query(params);
   },
   render: function(state, params) {
-    return getpage(params)(state, params);
+    return dom('#root', [getpage(params)(state, params)]);
   }
 });
 
