@@ -12,9 +12,9 @@ livereload = require 'gulp-livereload'
 # interactive builds
 gulp.task 'watch', ['watchcoffee'], ->
   livereload.listen()
-  gulp.watch 'svg/*.svg', ['svg']
-  gulp.watch ['style/*.styl'], ['style']
-  gulp.watch ['index.html',], ['html']
+  gulp.watch 'assets/*.svg', ['svg']
+  gulp.watch ['client/*.styl'], ['style']
+  gulp.watch ['server/index.coffee'], ['html']
 
 # build everything
 gulp.task 'build', ['svg', 'style', 'coffee']
@@ -26,21 +26,21 @@ svgstore = require 'gulp-svgstore'
 
 # generate svg symbols, including flat colour clones
 gulp.task 'svg', ->
-  flat = gulp.src 'svg/*.svg'
+  flat = gulp.src 'assets/*.svg'
     .pipe svgmin()
     .pipe replace /fill\=\"none*\"/g, ''
     .pipe replace /stroke\=\"none*\"/g, ''
     .pipe replace /fill\=\"[^"]*\"/g, 'fill="currentColor"'
     .pipe replace /stroke\=\"[^"]*\"/g, 'stroke="currentColor"'
     .pipe rename suffix: '-flat'
-  color = gulp.src 'svg/*.svg'
+  color = gulp.src 'assets/*.svg'
     .pipe svgmin()
     .pipe replace /fill\=\"none*\"/g, ''
     .pipe replace /stroke\=\"none*\"/g, ''
   merge flat, color
     .pipe svgstore()
     .pipe rename "#{npmpackage.name}-#{npmpackage.version}.min.svg"
-    .pipe gulp.dest 'dist'
+    .pipe gulp.dest 'client/dist'
     .pipe livereload()
 
 # style
@@ -50,7 +50,7 @@ minifycss = require 'gulp-minify-css'
 
 # compress stylus files and library css together
 gulp.task 'style', ->
-  gulp.src 'style/index.styl'
+  gulp.src 'client/index.styl'
     .pipe sourcemaps.init()
     .pipe stylus
       'include css': yes
@@ -74,7 +74,7 @@ gutil = require 'gulp-util'
 coffee = (options) ->
   shouldwatch = options?.watch? and options.watch
   browserifyargs =
-    entries: './app/index.coffee'
+    entries: './client/'
     # output sourcemaps
     debug: yes
     # needed for watchify
@@ -110,7 +110,7 @@ coffee = (options) ->
     comp.pipe uglify() unless shouldwatch
     comp
       .pipe sourcemaps.write './'
-      .pipe gulp.dest 'dist'
+      .pipe gulp.dest 'client/dist'
       .pipe livereload()
   if shouldwatch
     bundler.on 'update', (files) ->
@@ -123,5 +123,5 @@ gulp.task 'coffee', -> coffee()
 gulp.task 'watchcoffee', -> coffee watch: yes
 
 gulp.task 'html', ->
-  gulp.src 'index.coffee'
+  gulp.src 'server/index.coffee'
     .pipe livereload()

@@ -19,9 +19,9 @@ livereload = require('gulp-livereload');
 
 gulp.task('watch', ['watchcoffee'], function() {
   livereload.listen();
-  gulp.watch('svg/*.svg', ['svg']);
-  gulp.watch(['style/*.styl'], ['style']);
-  return gulp.watch(['index.html'], ['html']);
+  gulp.watch('assets/*.svg', ['svg']);
+  gulp.watch(['client/*.styl'], ['style']);
+  return gulp.watch(['server/index.coffee'], ['html']);
 });
 
 gulp.task('build', ['svg', 'style', 'coffee']);
@@ -34,11 +34,11 @@ svgstore = require('gulp-svgstore');
 
 gulp.task('svg', function() {
   var color, flat;
-  flat = gulp.src('svg/*.svg').pipe(svgmin()).pipe(replace(/fill\=\"none*\"/g, '')).pipe(replace(/stroke\=\"none*\"/g, '')).pipe(replace(/fill\=\"[^"]*\"/g, 'fill="currentColor"')).pipe(replace(/stroke\=\"[^"]*\"/g, 'stroke="currentColor"')).pipe(rename({
+  flat = gulp.src('assets/*.svg').pipe(svgmin()).pipe(replace(/fill\=\"none*\"/g, '')).pipe(replace(/stroke\=\"none*\"/g, '')).pipe(replace(/fill\=\"[^"]*\"/g, 'fill="currentColor"')).pipe(replace(/stroke\=\"[^"]*\"/g, 'stroke="currentColor"')).pipe(rename({
     suffix: '-flat'
   }));
-  color = gulp.src('svg/*.svg').pipe(svgmin()).pipe(replace(/fill\=\"none*\"/g, '')).pipe(replace(/stroke\=\"none*\"/g, ''));
-  return merge(flat, color).pipe(svgstore()).pipe(rename(npmpackage.name + "-" + npmpackage.version + ".min.svg")).pipe(gulp.dest('dist')).pipe(livereload());
+  color = gulp.src('assets/*.svg').pipe(svgmin()).pipe(replace(/fill\=\"none*\"/g, '')).pipe(replace(/stroke\=\"none*\"/g, ''));
+  return merge(flat, color).pipe(svgstore()).pipe(rename(npmpackage.name + "-" + npmpackage.version + ".min.svg")).pipe(gulp.dest('client/dist')).pipe(livereload());
 });
 
 stylus = require('gulp-stylus');
@@ -48,7 +48,7 @@ autoprefixer = require('gulp-autoprefixer');
 minifycss = require('gulp-minify-css');
 
 gulp.task('style', function() {
-  return gulp.src('style/index.styl').pipe(sourcemaps.init()).pipe(stylus({
+  return gulp.src('client/index.styl').pipe(sourcemaps.init()).pipe(stylus({
     'include css': true
   })).pipe(concat(npmpackage.name + "-" + npmpackage.version + ".min.css")).pipe(autoprefixer({
     browsers: ['last 2 versions']
@@ -73,7 +73,7 @@ coffee = function(options) {
   var browserifyargs, bundler, coffeefirst, compressor, shouldwatch;
   shouldwatch = ((options != null ? options.watch : void 0) != null) && options.watch;
   browserifyargs = {
-    entries: './app/index.coffee',
+    entries: './client/',
     debug: true,
     cache: {},
     packageCache: {},
@@ -114,7 +114,7 @@ coffee = function(options) {
     if (!shouldwatch) {
       comp.pipe(uglify());
     }
-    return comp.pipe(sourcemaps.write('./')).pipe(gulp.dest('dist')).pipe(livereload());
+    return comp.pipe(sourcemaps.write('./')).pipe(gulp.dest('client/dist')).pipe(livereload());
   };
   if (shouldwatch) {
     bundler.on('update', function(files) {
@@ -140,5 +140,5 @@ gulp.task('watchcoffee', function() {
 });
 
 gulp.task('html', function() {
-  return gulp.src('index.coffee').pipe(livereload());
+  return gulp.src('server/index.coffee').pipe(livereload());
 });

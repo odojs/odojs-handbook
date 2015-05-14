@@ -23,7 +23,7 @@ module.exports = component({
         }
       }, [
         svg('use', {
-          'xlink:href': "/dist/odojs-examples-1.0.0.min.svg#odojs"
+          'xlink:href': "/odojs-examples-1.0.0.min.svg#odojs"
         })
       ]), dom('div', state.test)
     ]);
