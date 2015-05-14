@@ -25,5 +25,6 @@ window.__loadinghandle = cycle (dt) ->
 setTimeout (->
   return if !window.__loadinghandle?
   timeout = document.querySelector '.loading .timeout'
+  return unless timeout?
   timeout.style.display = 'block'
 ), 10000

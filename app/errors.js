@@ -18,21 +18,19 @@ inject.bind('page:error', component({
     };
     return dom('div', {
       attributes: {
-        "class": 'wrapper error grid grid--center'
+        "class": 'wrapper error'
       }
     }, [
       dom('div', [
-        dom('div', {
+        svg('svg', {
           attributes: {
             "class": 'logo'
           }
         }, [
-          svg('svg', titileattr, [
-            svg('use', {
-              'xlink:href': "/dist/wedding-1.0.0.min.svg#emblem"
-            })
-          ])
-        ]), dom('div', [dom('h1', params.page.message), dom('p', params.page.details)])
+          svg('use', {
+            'xlink:href': "/dist/odojs-examples-1.0.0.min.svg#odojs"
+          })
+        ]), dom('div', [dom('p', params.page.message), dom('p', params.page.details)])
       ])
     ]);
   }

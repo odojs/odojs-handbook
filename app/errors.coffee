@@ -7,15 +7,13 @@ inject.bind 'page:error', component render: (state, params) ->
       class: 'title'
     style:
       width: '100%'
-  dom 'div', { attributes: class: 'wrapper error grid grid--center' }, [
+  dom 'div', { attributes: class: 'wrapper error' }, [
     dom 'div', [
-      dom 'div', { attributes: class: 'logo' }, [
-        svg 'svg', titileattr, [
-          svg 'use', { 'xlink:href': "/dist/wedding-1.0.0.min.svg#emblem" }
-        ]
+      svg 'svg', { attributes: class: 'logo' }, [
+        svg 'use', { 'xlink:href': "/dist/odojs-examples-1.0.0.min.svg#odojs" }
       ]
       dom 'div', [
-        dom 'h1', params.page.message
+        dom 'p', params.page.message
         dom 'p', params.page.details
       ]
     ]

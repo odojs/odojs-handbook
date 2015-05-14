@@ -40,5 +40,8 @@ setTimeout((function() {
     return;
   }
   timeout = document.querySelector('.loading .timeout');
+  if (timeout == null) {
+    return;
+  }
   return timeout.style.display = 'block';
 }), 10000);

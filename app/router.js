@@ -9,6 +9,8 @@ hub = require('odo-hub');
 
 page = require('page');
 
+inject.bind('page:default', require('./default'));
+
 page('/', function(e) {
   return hub.emit('navigate to the default page');
 });

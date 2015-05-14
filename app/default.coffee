@@ -1,14 +1,13 @@
-{ component, dom, svg, widget } = require 'odojs'
-inject = require 'injectinto'
+{ component, dom, svg } = require 'odojs'
 ql = require 'odoql'
-hub = require 'odo-hub'
 
-inject.bind 'page:default', component
+module.exports = component
+  query: (params) ->
+    test: ql.concat 'Hel', 'lo'
   render: (state, params) ->
-    console.log state
     dom 'div', { attributes: class: 'wrapper' }, [
       svg 'svg', { attributes: class: 'logo' }, [
         svg 'use', { 'xlink:href': "/dist/odojs-examples-1.0.0.min.svg#odojs" }
       ]
-      dom 'div', 'Hello'
+      dom 'div', state.test
     ]
