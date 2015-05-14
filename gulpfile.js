@@ -140,5 +140,5 @@ gulp.task('watchcoffee', function() {
 });
 
 gulp.task('html', function() {
-  return gulp.src('index.html').pipe(livereload());
+  return gulp.src('index.coffee').pipe(livereload());
 });

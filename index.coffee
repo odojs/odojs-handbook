@@ -20,34 +20,24 @@ app.use '/public', express.static path.join(__dirname, 'public'), maxAge: oneDay
 #       return
 #     res.json results
 
+
+oneshot = require 'odo-relay/oneshot'
+
 { component, widget } = require 'odojs'
 odoql = require 'odoql/odojs'
 component.use odoql
 widget.use odoql
-stringify = require 'odojs/stringify'
-component.use stringify
-split = require 'odoql-exe/split'
-build = require 'odoql-exe/buildqueries'
+
 exe = require 'odoql-exe'
 exe = exe()
 
-minirelay = (component, params, cb) ->
-  queries = component.query params
-  queries = split exe, queries
-  queries = queries.local
-  run = build exe, queries
-  run (err, state) ->
-    return cb err if err?
-    html = component state, params
-    cb null,
-      params: params
-      queries: queries
-      state: state
-      html: html
-
 app.get '/*', (req, res) ->
+  # TODO router not direct to component
   component = require './app/default'
-  minirelay component, {}, (err, result) ->
+  # TODO params from url
+  params = {}
+  oneshot exe, component, params, (err, result) ->
+    # TODO templating engine
     res.send """
   <!DOCTYPE html>
   <html>
@@ -65,7 +55,7 @@ app.get '/*', (req, res) ->
           <use xmlns:xlink=\"http://www.w3.org/1999/xlink\" xlink:href=\"/dist/odojs-examples-1.0.0.min.svg#odojs\"></use>
         </svg>
         <div class=\"timeout\" style=\"display: none;\">
-          <h1>LOADING TOO SLOW<br/>SOMETHING IS WRONG</h1>
+          <h1>Loading too slow, something is wrong</h1>
         </div>
       </div>
       <script src=\"/public/loading.js\"></script>

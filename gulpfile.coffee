@@ -123,5 +123,5 @@ gulp.task 'coffee', -> coffee()
 gulp.task 'watchcoffee', -> coffee watch: yes
 
 gulp.task 'html', ->
-  gulp.src 'index.html'
+  gulp.src 'index.coffee'
     .pipe livereload()
