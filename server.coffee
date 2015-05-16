@@ -1,5 +1,3 @@
-path = require 'path'
-
 express = require 'express'
 app = express()
 compression = require 'compression'
@@ -8,41 +6,34 @@ bodyParser = require 'body-parser'
 app.use bodyParser.urlencoded extended: yes
 app.use bodyParser.json()
 oneDay = 1000 * 60 * 60 * 24
-app.use express.static path.join(__dirname, '..', 'client'), maxAge: oneDay
-
-# app.get '/query', (req, res) ->
-#   query = JSON.parse req.query.q
-#   ql.exec query, stores, (err, results) ->
-#     if err?
-#       res.status 400
-#       res.json err
-#       return
-#     res.json results
+path = require 'path'
+app.use '/dist', express.static path.join(__dirname, 'dist'), maxAge: oneDay
 
 oneshot = require 'odo-relay/oneshot'
 
-{ component, widget } = require 'odojs'
+{ component, widget, hook } = require 'odojs'
 odoql = require 'odoql/odojs'
 component.use odoql
 widget.use odoql
+hook.use odoql
 stringify = require 'odojs/stringify'
 component.use odoql
-
-require './test'
 
 exe = require 'odoql-exe'
 exe = exe()
 
-require '../shared/'
-inject = require 'injectinto'
+require './shared/'
+router = require './shared/router'
+route = require 'odo-route'
 
-# TODO router not direct to component
-appdefault = inject.one 'page:default'
+app.get '/favicon.ico', (req, res) ->
+  res.status(404).end()
+
+# TODO queries on the server
 
 app.get '/*', (req, res) ->
-  # TODO params from url
-  params = {}
-  oneshot exe, appdefault, params, (err, result) ->
+  params = route req.url
+  oneshot exe, router, params, (err, result) ->
     # TODO templating engine
     res.send """
       <!DOCTYPE html>
@@ -55,20 +46,15 @@ app.get '/*', (req, res) ->
           <link rel="stylesheet" href="/dist/odojs-examples-1.0.0.min.css" />
         </head>
         <body>
-          <div id="loading" class="wrapper">
-            <svg class="logo">
-              <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="/dist/odojs-examples-1.0.0.min.svg#odojs"></use>
-            </svg>
-            <div class="timeout" style="display: none;">
-              <h1>Loading too slow, something is wrong</h1>
-            </div>
+          <div id="loading" class="wrapper" style="display: none;">
+            <p>Loading too slow, something is wrong</p>
           </div>
           <script src="/dist/loading.js"></script>
           <script>
             window.__queries = #{JSON.stringify result.queries};
             window.__state = #{JSON.stringify result.state};
           </script>
-          <div id="root" style="display: none;">#{result.html}</div>
+          #{result.html}
           <script src="/dist/odojs-examples-1.0.0.min.js"></script>
         </body>
       </html>

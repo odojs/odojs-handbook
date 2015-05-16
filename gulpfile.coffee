@@ -13,8 +13,8 @@ livereload = require 'gulp-livereload'
 gulp.task 'watch', ['watchcoffee'], ->
   livereload.listen()
   gulp.watch 'assets/*.svg', ['svg']
-  gulp.watch ['client/*.styl'], ['style']
-  gulp.watch ['server/index.coffee'], ['html']
+  gulp.watch ['*.styl'], ['style']
+  gulp.watch ['server.coffee'], ['html']
 
 # build everything
 gulp.task 'build', ['svg', 'style', 'coffee']
@@ -40,7 +40,7 @@ gulp.task 'svg', ->
   merge flat, color
     .pipe svgstore()
     .pipe rename "#{npmpackage.name}-#{npmpackage.version}.min.svg"
-    .pipe gulp.dest 'client/dist'
+    .pipe gulp.dest 'dist'
     .pipe livereload()
 
 # style
@@ -50,7 +50,7 @@ minifycss = require 'gulp-minify-css'
 
 # compress stylus files and library css together
 gulp.task 'style', ->
-  gulp.src 'client/index.styl'
+  gulp.src 'client.styl'
     .pipe sourcemaps.init()
     .pipe stylus
       'include css': yes
@@ -74,7 +74,7 @@ gutil = require 'gulp-util'
 coffee = (options) ->
   shouldwatch = options?.watch? and options.watch
   browserifyargs =
-    entries: './client/'
+    entries: './client'
     # output sourcemaps
     debug: yes
     # needed for watchify
@@ -110,7 +110,7 @@ coffee = (options) ->
     comp.pipe uglify() unless shouldwatch
     comp
       .pipe sourcemaps.write './'
-      .pipe gulp.dest 'client/dist'
+      .pipe gulp.dest 'dist'
       .pipe livereload()
   if shouldwatch
     bundler.on 'update', (files) ->
@@ -123,5 +123,5 @@ gulp.task 'coffee', -> coffee()
 gulp.task 'watchcoffee', -> coffee watch: yes
 
 gulp.task 'html', ->
-  gulp.src 'server/index.coffee'
+  gulp.src 'server.coffee'
     .pipe livereload()

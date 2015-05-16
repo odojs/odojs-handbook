@@ -20,8 +20,8 @@ livereload = require('gulp-livereload');
 gulp.task('watch', ['watchcoffee'], function() {
   livereload.listen();
   gulp.watch('assets/*.svg', ['svg']);
-  gulp.watch(['client/*.styl'], ['style']);
-  return gulp.watch(['server/index.coffee'], ['html']);
+  gulp.watch(['*.styl'], ['style']);
+  return gulp.watch(['server.coffee'], ['html']);
 });
 
 gulp.task('build', ['svg', 'style', 'coffee']);
@@ -38,7 +38,7 @@ gulp.task('svg', function() {
     suffix: '-flat'
   }));
   color = gulp.src('assets/*.svg').pipe(svgmin()).pipe(replace(/fill\=\"none*\"/g, '')).pipe(replace(/stroke\=\"none*\"/g, ''));
-  return merge(flat, color).pipe(svgstore()).pipe(rename(npmpackage.name + "-" + npmpackage.version + ".min.svg")).pipe(gulp.dest('client/dist')).pipe(livereload());
+  return merge(flat, color).pipe(svgstore()).pipe(rename(npmpackage.name + "-" + npmpackage.version + ".min.svg")).pipe(gulp.dest('dist')).pipe(livereload());
 });
 
 stylus = require('gulp-stylus');
@@ -48,7 +48,7 @@ autoprefixer = require('gulp-autoprefixer');
 minifycss = require('gulp-minify-css');
 
 gulp.task('style', function() {
-  return gulp.src('client/index.styl').pipe(sourcemaps.init()).pipe(stylus({
+  return gulp.src('client.styl').pipe(sourcemaps.init()).pipe(stylus({
     'include css': true
   })).pipe(concat(npmpackage.name + "-" + npmpackage.version + ".min.css")).pipe(autoprefixer({
     browsers: ['last 2 versions']
@@ -73,7 +73,7 @@ coffee = function(options) {
   var browserifyargs, bundler, coffeefirst, compressor, shouldwatch;
   shouldwatch = ((options != null ? options.watch : void 0) != null) && options.watch;
   browserifyargs = {
-    entries: './client/',
+    entries: './client',
     debug: true,
     cache: {},
     packageCache: {},
@@ -114,7 +114,7 @@ coffee = function(options) {
     if (!shouldwatch) {
       comp.pipe(uglify());
     }
-    return comp.pipe(sourcemaps.write('./')).pipe(gulp.dest('client/dist')).pipe(livereload());
+    return comp.pipe(sourcemaps.write('./')).pipe(gulp.dest('dist')).pipe(livereload());
   };
   if (shouldwatch) {
     bundler.on('update', function(files) {
@@ -140,5 +140,5 @@ gulp.task('watchcoffee', function() {
 });
 
 gulp.task('html', function() {
-  return gulp.src('server/index.coffee').pipe(livereload());
+  return gulp.src('server.coffee').pipe(livereload());
 });
