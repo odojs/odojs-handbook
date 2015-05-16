@@ -4,13 +4,17 @@ This handbook is the best way to understand and use [Odo.js](https://github.com/
 
 Odo.js is a large collection of tiny modules that can be used together to build web applications.
 
-[How does Odo.js fit in?](#how-does-odo-js-fit-in)
-[Getting Started](#getting-started)
-[Code Overview](#code-overview)
-[Odo.js Documentation](#odo-js-documentation)
+- [How does Odo.js fit in?](#how-does-odojs-fit-in)
+- [Getting Started](#getting-started)
+- [Code Overview](#code-overview)
+- [Odo.js Documentation](#odo-js-documentation)
 
 # How does Odo.js fit in?
 
+Odo.js is inspired by [React](https://facebook.github.io/react/), [deku](https://github.com/segmentio/deku) and the [Relay](https://facebook.github.io/react/blog/2015/02/20/introducing-relay-and-graphql.html) [pattern](https://facebook.github.io/react/blog/2015/03/19/building-the-facebook-news-feed-with-relay.html).
+
+Odo.js modules fit together to implement many desirable features of a modern javascript web framework:
+- [Isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/). When properly setup, Odo.js components can execute in Node.js and in the browser allowing dom elements to be pre-rendered on the server speeding up the initial load of websites.
 
 
 # Getting Started
