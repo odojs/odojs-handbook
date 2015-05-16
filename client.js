@@ -3,8 +3,6 @@ var body, component, exe, fn, hub, i, len, loading, odoql, page, ref, ref1, rela
 
 hub = require('odo-hub');
 
-window.hub = hub;
-
 ref = require('odojs'), component = ref.component, widget = ref.widget;
 
 odoql = require('odoql/odojs');
@@ -13,27 +11,24 @@ component.use(odoql);
 
 widget.use(odoql);
 
+exe = require('odoql-exe');
+
+exe = exe({
+  hub: hub
+});
+
 require('./shared/');
+
+relay = require('odo-relay');
 
 router = require('./shared/router');
 
 root = document.querySelector('#root');
 
-body = document.querySelector('body');
-
-loading = document.querySelector('#loading');
-
-body.removeChild(loading);
-
-exe = require('odoql-exe');
-
-exe = exe();
-
-relay = require('odo-relay');
-
 scene = relay(root, router, exe, {
   queries: window.__queries,
-  state: window.__state
+  state: window.__state,
+  hub: hub
 });
 
 route = require('odo-route');
@@ -69,6 +64,10 @@ hub.all(function(e, description, p, cb) {
   return cb();
 });
 
-page = require('page');
-
 page();
+
+body = document.querySelector('body');
+
+loading = document.querySelector('#loading');
+
+body.removeChild(loading);
