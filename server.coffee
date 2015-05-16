@@ -1,3 +1,26 @@
+# odo-exe uses an optional odo-hub for logging and statistics
+hub = require 'odo-hub'
+
+# Configure Odo.js with mixins
+{ component, widget, hook } = require 'odojs'
+odoql = require 'odoql/odojs'
+component.use odoql
+widget.use odoql
+hook.use odoql
+stringify = require 'odojs/stringify'
+component.use stringify
+
+# Setup client odoql execution providers
+# TODO add providers here to give components more query options
+# e.g. exe.use require 'odoql-csv'
+exe = require 'odoql-exe'
+exe = exe hub: hub
+
+# Shared components register against injectinto
+require './shared/'
+
+# Configure a generic express server and host /dist at /dist
+# These are the only files needed on the client
 express = require 'express'
 app = express()
 compression = require 'compression'
@@ -9,32 +32,28 @@ oneDay = 1000 * 60 * 60 * 24
 path = require 'path'
 app.use '/dist', express.static path.join(__dirname, 'dist'), maxAge: oneDay
 
-oneshot = require 'odo-relay/oneshot'
-
-{ component, widget, hook } = require 'odojs'
-odoql = require 'odoql/odojs'
-component.use odoql
-widget.use odoql
-hook.use odoql
-stringify = require 'odojs/stringify'
-component.use odoql
-
-exe = require 'odoql-exe'
-exe = exe()
-
-require './shared/'
-router = require './shared/router'
-route = require 'odo-route'
-
+# Stop annoying requests
 app.get '/favicon.ico', (req, res) ->
   res.status(404).end()
 
-# TODO queries on the server
+# TODO create a generic query endpoint for odoql
 
+# TODO create post endpoints for data updates
+
+# Setup odo relay oneshot against the root router component
+# So we can build queries, state and dom elements on the server
+router = require './shared/router'
+route = require 'odo-route'
+oneshot = require 'odo-relay/oneshot'
 app.get '/*', (req, res) ->
+  # Map the url to parameters
   params = route req.url
+  # Detect any hardcoded statuses and output
+  res.status params.status if params?.status?
   oneshot exe, router, params, (err, result) ->
-    # TODO templating engine
+    # TODO an error page
+    return res.status(500).send err if err?
+    # TODO Use a templating engine instead of a literal string
     res.send """
       <!DOCTYPE html>
       <html>

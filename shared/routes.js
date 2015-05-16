@@ -17,6 +17,7 @@ route('/', function() {
 
 route('*', function(p) {
   return {
+    status: 404,
     page: {
       name: 'error',
       message: "Sorry, the \"" + p.url + "\" page was not found."

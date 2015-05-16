@@ -1,5 +1,5 @@
 {
-  "name": "odojs-examples",
+  "name": "odojs-handbook",
   "private": true,
   "version": "1.0.0",
   "description": "An example setup of Odo.js",
@@ -9,14 +9,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/odojs/odojs-examples.git"
+    "url": "https://github.com/odojs/odojs-handbook.git"
   },
   "author": "Thomas Coats",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/odojs/odojs-examples/issues"
+    "url": "https://github.com/odojs/odojs-handbook/issues"
   },
-  "homepage": "https://github.com/odojs/odojs-examples",
+  "homepage": "https://github.com/odojs/odojs-handbook",
   "devDependencies": {
     "browserify": "^9.0.7",
     "caching-coffeeify": "^0.5.0",

@@ -1,14 +1,16 @@
 # odo-relay and odo-exe use an optional odo-hub for logging and statistics
 hub = require 'odo-hub'
 
-# Configure odoql with mixins
-{ component, widget } = require 'odojs'
+# Configure Odo.js with mixins
+{ component, widget, hook } = require 'odojs'
 odoql = require 'odoql/odojs'
 component.use odoql
 widget.use odoql
+hook.use odoql
 
 # Setup client odoql execution providers
-# TODO add more providers to give components more query options
+# TODO add providers here to give components more query options
+# e.g. exe.use require 'odoql-csv'
 exe = require 'odoql-exe'
 exe = exe hub: hub
 
