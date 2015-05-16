@@ -17,7 +17,8 @@ Odo.js is inspired by [React](https://facebook.github.io/react/), [deku](https:/
 Odo.js modules fit together to implement many desirable features of a modern javascript web framework:
 
 - **[Isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/)**. Odo.js components can execute in Node.js and in the browser allowing dom elements to be pre-rendered on the server speeding up the initial load of websites. The initial queries and query results (state) are also available to the browser.
-- **Components**. Each component defines the information it needs and how to turn that information into dom elements.
+- **Stateless Components**. Each component defines the information it needs and how to turn that information into dom elements.
+- **Immutable State**. Parameters and state are passed into the components. Any changes to state and parameters are expected to be driven by events.
 - **Custom Components**. Many existing frameworks require access to the dom and don’t work in a uni-directional data environment. Odo.js provides an extension point called [widgets](https://github.com/odojs/odojs/wiki/widget).
 - **Custom Interactions**. Animations require access to the dom and control of when sub elements are added and removed from the dom. [Hooks](https://github.com/odojs/odojs/wiki/hook) provide this ability.
 - **DOM Namespaces**. SVG and other elements require namespaces on elements and namespaces on attributes. These are all supported by the excellent [virtual-dom](https://github.com/Matt-Esch/virtual-dom) library that powers the virtual dom aspects of Odo.js.
