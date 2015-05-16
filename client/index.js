@@ -22,25 +22,6 @@ hub.all(function(e, description, p, cb) {
   return cb();
 });
 
-hub.every('navigate to the default page', function(p, cb) {
-  scene.update({
-    page: {
-      name: 'default'
-    }
-  });
-  return cb();
-});
-
-hub.every('navigation error, {pathname} not found', function(p, cb) {
-  scene.update({
-    page: {
-      name: 'error',
-      message: "Sorry, the \"" + p.pathname + "\" page was not found."
-    }
-  });
-  return cb();
-});
-
 page = require('page');
 
 page();

@@ -28,11 +28,16 @@ widget.use odoql
 stringify = require 'odojs/stringify'
 component.use odoql
 
+require './test'
+
 exe = require 'odoql-exe'
 exe = exe()
 
+require '../shared/'
+inject = require 'injectinto'
+
 # TODO router not direct to component
-appdefault = require '../client/default'
+appdefault = inject.one 'page:default'
 
 app.get '/*', (req, res) ->
   # TODO params from url

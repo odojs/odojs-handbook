@@ -1,7 +1,8 @@
 { component, dom, svg } = require 'odojs'
+inject = require 'injectinto'
 ql = require 'odoql'
 
-module.exports = component
+inject.bind 'page:default', component
   query: (params) ->
     test: ql.concat('Hel', ql.if(ql.gt(6, 5), 'lo World', 'lo'))
   render: (state, params) ->

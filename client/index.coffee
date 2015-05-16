@@ -16,17 +16,5 @@ hub.all (e, description, p, cb) ->
     console.log "+ #{description}"
   cb()
 
-# Navigation
-hub.every 'navigate to the default page', (p, cb) ->
-  scene.update page: name: 'default'
-  cb()
-
-hub.every 'navigation error, {pathname} not found', (p, cb) ->
-  scene.update page:
-    name: 'error'
-    message: "Sorry, the \"#{p.pathname}\" page was not found."
-  cb()
-
-# Connect to the url
 page = require 'page'
 page()
