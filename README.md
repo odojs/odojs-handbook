@@ -1,13 +1,14 @@
 # Odo.js Handbook
 
-This handbook is the best way to understand and use [Odo.js](https://github.com/odojs/odojs).
+This handbook is probably the best way to understand and use [Odo.js](https://github.com/odojs/odojs).
 
 Odo.js is a large collection of tiny modules that can be used together to build web applications.
 
 - [How does Odo.js fit in?](#how-does-odojs-fit-in)
+- [Modules used in this example](#modules-used-in-this-example)
 - [Getting Started](#getting-started)
 - [Code Overview](#code-overview)
-- [Odo.js Documentation](#odo-js-documentation)
+- [Odo.js Documentation](#odojs-documentation)
 
 # How does Odo.js fit in?
 
@@ -15,7 +16,7 @@ Odo.js is inspired by [React](https://facebook.github.io/react/), [deku](https:/
 
 Odo.js modules fit together to implement many desirable features of a modern javascript web framework:
 
-- [Isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/). Odo.js components can execute in Node.js and in the browser allowing dom elements to be pre-rendered on the server speeding up the initial load of websites. The initial queries and query results (state) are also available to the browser.
+- **[Isomorphic](http://nerds.airbnb.com/isomorphic-javascript-future-web-apps/)**. Odo.js components can execute in Node.js and in the browser allowing dom elements to be pre-rendered on the server speeding up the initial load of websites. The initial queries and query results (state) are also available to the browser.
 - **Components**. Each component defines the information it needs and how to turn that information into dom elements.
 - **Custom Components**. Many existing frameworks require access to the dom and don’t work in a uni-directional data environment. Odo.js provides an extension point called [widgets](https://github.com/odojs/odojs/wiki/widget).
 - **Custom Interactions**. Animations require access to the dom and control of when sub elements are added and removed from the dom. [Hooks](https://github.com/odojs/odojs/wiki/hook) provide this ability.
@@ -30,11 +31,28 @@ Odo.js modules fit together to implement many desirable features of a modern jav
 
 What is also provided in this Handbook Example:
 
-- **Gulp Build System**. In this example all client assets compile down to three files: javascript, css and svg symbols. This greatly reduces page load time.
+- **Gulp Build System**. In this example all client assets compile down to three files: javascript, css and svg symbols. This greatly reduces page load time. Source maps are provided for javascript and css!
 - **CoffeeScript**. If you love [CoffeeScript](http://coffeescript.org/) you’ll like this example project. If not - all of Odo.js works with vanilla javascript as well.
 - **Stylus**. If you like CoffeeScript you might like this css pre-processor. All the brackets, colons and semi-colons are no longer needed. [Stylus](https://learnboost.github.io/stylus/) also has most of the same features as [LESS](http://lesscss.org/) and [SASS](http://sass-lang.com/). 
 - **SVG Symbols**. A gulp task pulls all svg files from the assets directory into a single svg file. Individual items can be included in svg diagrams through the `use` element with `xlink:href`. A single file that has multiple assets also reduces page load time.
 - **Gulp Watch**. The default gulp task watches for changes and automatically recompiles the javascript, css, and svg dist files. A cache  It also runs a livereload server that can automatically refresh the browser page if used with the livereload plugin.
+
+
+# Modules used in this example
+
+- [browserify](http://browserify.org/). Allows Node.js style `require` statements in browser javascript. Also using related modules: [coffeeify](https://github.com/substack/coffeeify), [caching-coffeeify](https://github.com/thlorenz/caching-coffeeify) and [errorify](https://github.com/zertosh/errorify).
+- [express](http://expressjs.com/) (and various express modules). Node.js web server. Odo.js works in other frameworks as well.
+- [gulp](http://gulpjs.com/) (and various gulp modules). Node.js streaming build system.
+- [injectinto](https://github.com/odojs/injectinto). Dependency injection for javascript.
+- [odo-hub](https://github.com/odojs/odo-hub). Small message bus that doubles as a logger.
+- [odo-relay](https://github.com/odojs/odo-relay). Pulls together OdoQL and Odo.js into the Relay pattern.
+- [odo-route](https://github.com/odojs/odo-route). Simple route registration and mapping.
+- [odojs](https://github.com/odojs/odojs). Uses [virtual-dom](https://github.com/Matt-Esch/virtual-dom) to provide methods to build components, widgets and hooks.
+- [odoql](https://github.com/odojs/odoql). Allows OdoQL queries to be built through a chaining API.
+- [odoql-exe](https://github.com/odojs/odoql-exe). Extensible execution strategies for OdoQL in javascript. Can run in the browser or in Node.js.
+- [pagejs](https://visionmedia.github.io/page.js/). Micro router to control pushstate in the browser.
+- [superagent](https://github.com/visionmedia/superagent). An http request API that works in the browser and in Node.js.
+- [svg4everybody](https://github.com/jonathantneal/svg4everybody). Polyfill for old browsers to support svg symbols.
 
 
 # Getting Started
