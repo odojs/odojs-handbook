@@ -1,14 +1,19 @@
 { component, dom, svg } = require 'odojs'
 inject = require 'injectinto'
 ql = require 'odoql'
+ql = ql
+  .use 'json'
+  .use 'localstorage'
 
 inject.bind 'page:default', component
   query: (params) ->
-    test: ql.concat('Hel', ql.if(ql.gt(6, 5), 'lo World', 'lo'))
+    test1: ql.concat('Hel', ql.if(ql.gt(6, 5), 'lo World', 'lo'))
+    test2: ql.localstorage('test')
   render: (state, params) ->
+    console.log state.test2
     dom 'div', { attributes: class: 'wrapper' }, [
       svg 'svg', { attributes: class: 'logo' }, [
-        svg 'use', { 'xlink:href': "/dist/odojs-examples-1.0.0.min.svg#odojs" }
+        svg 'use', { 'xlink:href': "/dist/odojs-handbook-1.0.0.min.svg#odojs" }
       ]
-      dom 'div', state.test
+      dom 'div', state.test1
     ]

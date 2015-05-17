@@ -13,6 +13,8 @@ hook.use odoql
 # e.g. exe.use require 'odoql-csv'
 exe = require 'odoql-exe'
 exe = exe hub: hub
+  .use require 'odoql-json'
+  .use require 'odoql-localstorage'
 
 # Shared components register against injectinto
 require './shared/'

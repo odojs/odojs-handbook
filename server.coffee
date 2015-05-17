@@ -15,6 +15,7 @@ component.use stringify
 # e.g. exe.use require 'odoql-csv'
 exe = require 'odoql-exe'
 exe = exe hub: hub
+  .use require 'odoql-json'
 
 # Shared components register against injectinto
 require './shared/'
@@ -62,7 +63,7 @@ app.get '/*', (req, res) ->
           <meta http-equiv="X-UA-Compatible" content="IE=edge, chrome=1" />
           <meta name="viewport" content="width=700">
           <title>Odo.js Examples</title>
-          <link rel="stylesheet" href="/dist/odojs-examples-1.0.0.min.css" />
+          <link rel="stylesheet" href="/dist/odojs-handbook-1.0.0.min.css" />
         </head>
         <body>
           <div id="loading" class="wrapper" style="display: none;">
@@ -74,7 +75,7 @@ app.get '/*', (req, res) ->
             window.__state = #{JSON.stringify result.state};
           </script>
           #{result.html}
-          <script src="/dist/odojs-examples-1.0.0.min.js"></script>
+          <script src="/dist/odojs-handbook-1.0.0.min.js"></script>
         </body>
       </html>
     """

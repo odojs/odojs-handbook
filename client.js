@@ -17,7 +17,7 @@ exe = require('odoql-exe');
 
 exe = exe({
   hub: hub
-});
+}).use(require('odoql-json')).use(require('odoql-localstorage'));
 
 require('./shared/');
 

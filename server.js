@@ -21,7 +21,7 @@ exe = require('odoql-exe');
 
 exe = exe({
   hub: hub
-});
+}).use(require('odoql-json'));
 
 require('./shared/');
 
@@ -69,7 +69,7 @@ app.get('/*', function(req, res) {
     if (err != null) {
       return res.status(500).send(err);
     }
-    return res.send("<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge, chrome=1\" />\n    <meta name=\"viewport\" content=\"width=700\">\n    <title>Odo.js Examples</title>\n    <link rel=\"stylesheet\" href=\"/dist/odojs-examples-1.0.0.min.css\" />\n  </head>\n  <body>\n    <div id=\"loading\" class=\"wrapper\" style=\"display: none;\">\n      <p>Loading too slow, something is wrong</p>\n    </div>\n    <script src=\"/dist/loading.js\"></script>\n    <script>\n      window.__queries = " + (JSON.stringify(result.queries)) + ";\n      window.__state = " + (JSON.stringify(result.state)) + ";\n    </script>\n    " + result.html + "\n    <script src=\"/dist/odojs-examples-1.0.0.min.js\"></script>\n  </body>\n</html>");
+    return res.send("<!DOCTYPE html>\n<html>\n  <head>\n    <meta charset=\"utf-8\">\n    <meta http-equiv=\"X-UA-Compatible\" content=\"IE=edge, chrome=1\" />\n    <meta name=\"viewport\" content=\"width=700\">\n    <title>Odo.js Examples</title>\n    <link rel=\"stylesheet\" href=\"/dist/odojs-handbook-1.0.0.min.css\" />\n  </head>\n  <body>\n    <div id=\"loading\" class=\"wrapper\" style=\"display: none;\">\n      <p>Loading too slow, something is wrong</p>\n    </div>\n    <script src=\"/dist/loading.js\"></script>\n    <script>\n      window.__queries = " + (JSON.stringify(result.queries)) + ";\n      window.__state = " + (JSON.stringify(result.state)) + ";\n    </script>\n    " + result.html + "\n    <script src=\"/dist/odojs-handbook-1.0.0.min.js\"></script>\n  </body>\n</html>");
   });
 });
 

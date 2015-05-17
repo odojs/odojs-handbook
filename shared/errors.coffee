@@ -10,7 +10,7 @@ inject.bind 'page:error', component render: (state, params) ->
   dom 'div', { attributes: class: 'wrapper error' }, [
     dom 'div', [
       svg 'svg', { attributes: class: 'logo' }, [
-        svg 'use', { 'xlink:href': "/dist/odojs-examples-1.0.0.min.svg#odojs" }
+        svg 'use', { 'xlink:href': "/dist/odojs-handbook-1.0.0.min.svg#odojs" }
       ]
       dom 'div', [
         dom 'p', params.page.message
