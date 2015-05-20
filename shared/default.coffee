@@ -5,7 +5,7 @@ ql = ql
   .use 'json'
   .use 'localstorage'
 
-inject.bind 'page:default', component
+xxx = component
   query: (params) ->
     test1: ql.concat('Hel', ql.if(ql.gt(6, 5), 'lo World', 'lo'))
     test2: ql.localstorage('test')
@@ -17,3 +17,5 @@ inject.bind 'page:default', component
       ]
       dom 'div', state.test1
     ]
+
+inject.bind 'page:default', xxx
