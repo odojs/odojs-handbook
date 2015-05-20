@@ -11,10 +11,24 @@ hook.use odoql
 # Setup client odoql execution providers
 # TODO add providers here to give components more query options
 # e.g. exe.use require 'odoql-csv'
+dynamic = require 'odoql-exe/dynamic'
 exe = require 'odoql-exe'
 exe = exe hub: hub
   .use require 'odoql-json'
   .use require 'odoql-localstorage'
+  .use dynamic (keys, queries, cb) ->
+    request = require 'superagent'
+    request
+      .post '/query'
+      .send q: queries
+      .set 'Accept', 'application/json'
+      .end (err, res) ->
+        return cb err if err?
+        return cb new Error res.text unless res.ok
+        result = {}
+        for key in keys
+          result[key] = res.body[key]
+        cb null, result
 
 # Shared components register against injectinto
 require './shared/'

@@ -10,12 +10,24 @@ hook.use odoql
 stringify = require 'odojs/stringify'
 component.use stringify
 
+# Setup a custom store
+# Useful for data sources that are manual and don't want to
+# be exposed through odoql.
+fs = require 'fs'
+store = require 'odoql-store'
+store = store()
+  .use 'users', (params, cb) ->
+    fs.readFile './users.json', (err, buf) ->
+      return cb err if err?
+      cb null, JSON.parse buf.toString()
+
 # Setup client odoql execution providers
 # TODO add providers here to give components more query options
 # e.g. exe.use require 'odoql-csv'
 exe = require 'odoql-exe'
 exe = exe hub: hub
   .use require 'odoql-json'
+  .use store
 
 # Shared components register against injectinto
 require './shared/'
@@ -37,7 +49,13 @@ app.use '/dist', express.static path.join(__dirname, 'dist'), maxAge: oneDay
 app.get '/favicon.ico', (req, res) ->
   res.status(404).end()
 
-# TODO create a generic query endpoint for odoql
+# Endpoint for queries that can't execute on the client
+buildqueries = require 'odoql-exe/buildqueries'
+app.post '/query', (req, res, next) ->
+  run = buildqueries exe, req.body.q
+  run (errors, results) ->
+    return next errors if errors?
+    res.send results
 
 # TODO create post endpoints for data updates
 
