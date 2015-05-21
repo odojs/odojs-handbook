@@ -8,7 +8,7 @@ ql = ql
   .use 'http'
   .use 'csv'
 
-xxx = component
+inject.bind 'page:default', component
   query: (params) ->
     test1: ql.concat('Hel', ql.if(ql.gt(6, 5), 'lo World', 'lo'))
     test2: ql.localstorage 'test'
@@ -23,4 +23,3 @@ xxx = component
       dom 'div', state.test1
     ]
 
-inject.bind 'page:default', xxx
