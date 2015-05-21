@@ -16,6 +16,8 @@ exe = require 'odoql-exe'
 exe = exe hub: hub
   .use require 'odoql-json'
   .use require 'odoql-localstorage'
+  .use require 'odoql-http'
+  .use require 'odoql-csv'
   .use dynamic (keys, queries, cb) ->
     request = require 'superagent'
     request

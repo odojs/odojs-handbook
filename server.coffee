@@ -24,9 +24,12 @@ store = store()
 # Setup client odoql execution providers
 # TODO add providers here to give components more query options
 # e.g. exe.use require 'odoql-csv'
-exe = require 'odoql-exe'
-exe = exe hub: hub
+Exe = require 'odoql-exe'
+exe = Exe hub: hub
   .use require 'odoql-json'
+  .use require 'odoql-http'
+  .use require 'odoql-fs'
+  .use require 'odoql-csv'
   .use store
 
 # Shared components register against injectinto
@@ -51,8 +54,12 @@ app.get '/favicon.ico', (req, res) ->
 
 # Endpoint for queries that can't execute on the client
 buildqueries = require 'odoql-exe/buildqueries'
+queryexe = Exe hub: hub
+  .use require 'odoql-json'
+  .use require 'odoql-csv'
+  .use store
 app.post '/query', (req, res, next) ->
-  run = buildqueries exe, req.body.q
+  run = buildqueries queryexe, req.body.q
   run (errors, results) ->
     return next errors if errors?
     res.send results

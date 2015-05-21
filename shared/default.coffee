@@ -5,6 +5,8 @@ ql = ql
   .use 'json'
   .use 'localstorage'
   .use 'store'
+  .use 'http'
+  .use 'csv'
 
 xxx = component
   query: (params) ->
