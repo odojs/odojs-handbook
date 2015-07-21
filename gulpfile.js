@@ -17,6 +17,8 @@ npmpackage = require('./package.json');
 
 livereload = require('gulp-livereload');
 
+livereload = require('gulp-livereload');
+
 gulp.task('watch', ['watchcoffee'], function() {
   livereload.listen();
   gulp.watch('assets/*.svg', ['svg']);
@@ -140,5 +142,5 @@ gulp.task('watchcoffee', function() {
 });
 
 gulp.task('html', function() {
-  return gulp.src('server.coffee');
+  return gulp.src('server.coffee').pipe(livereload());
 });

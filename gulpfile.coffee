@@ -7,6 +7,7 @@ concat = require 'gulp-concat'
 merge = require 'merge-stream'
 sourcemaps = require 'gulp-sourcemaps'
 npmpackage = require './package.json'
+livereload = require 'gulp-livereload'
 
 # interactive builds
 livereload = require 'gulp-livereload'
@@ -124,3 +125,4 @@ gulp.task 'watchcoffee', -> coffee watch: yes
 
 gulp.task 'html', ->
   gulp.src 'server.coffee'
+    .pipe livereload()
