@@ -28,13 +28,17 @@ store = store().use('users', function(params, cb) {
     }
     return cb(null, JSON.parse(buf.toString()));
   });
+}).use('long', function(params, cb) {
+  return setTimeout(function() {
+    return cb(null, '5s Delayed Query');
+  }, 5000);
 });
 
 Exe = require('odoql-exe');
 
 exe = Exe({
   hub: hub
-}).use(require('odoql-json')).use(require('odoql-http')).use(require('odoql-fs')).use(require('odoql-csv')).use(store);
+});
 
 require('./shared/');
 

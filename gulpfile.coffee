@@ -9,7 +9,9 @@ sourcemaps = require 'gulp-sourcemaps'
 npmpackage = require './package.json'
 
 # interactive builds
+livereload = require 'gulp-livereload'
 gulp.task 'watch', ['watchcoffee'], ->
+  livereload.listen()
   gulp.watch 'assets/*.svg', ['svg']
   gulp.watch ['*.styl'], ['style']
   gulp.watch ['server.coffee'], ['html']
@@ -39,6 +41,7 @@ gulp.task 'svg', ->
     .pipe svgstore()
     .pipe rename "#{npmpackage.name}-#{npmpackage.version}.min.svg"
     .pipe gulp.dest 'dist'
+    .pipe livereload()
 
 # style
 stylus = require 'gulp-stylus'
@@ -56,6 +59,7 @@ gulp.task 'style', ->
     .pipe minifycss()
     .pipe sourcemaps.write './'
     .pipe gulp.dest 'dist'
+    .pipe livereload()
 
 # coffee
 browserify = require 'browserify'
@@ -107,6 +111,7 @@ coffee = (options) ->
     comp
       .pipe sourcemaps.write './'
       .pipe gulp.dest 'dist'
+      .pipe livereload()
   if shouldwatch
     bundler.on 'update', (files) ->
       for file in files

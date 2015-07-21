@@ -20,17 +20,21 @@ store = store()
     fs.readFile './users.json', (err, buf) ->
       return cb err if err?
       cb null, JSON.parse buf.toString()
+  .use 'long', (params, cb) ->
+    setTimeout(->
+      cb null, '5s Delayed Query'
+    , 5000)
 
 # Setup client odoql execution providers
 # TODO add providers here to give components more query options
 # e.g. exe.use require 'odoql-csv'
 Exe = require 'odoql-exe'
 exe = Exe hub: hub
-  .use require 'odoql-json'
-  .use require 'odoql-http'
-  .use require 'odoql-fs'
-  .use require 'odoql-csv'
-  .use store
+  # .use require 'odoql-json'
+  # .use require 'odoql-http'
+  # .use require 'odoql-fs'
+  # .use require 'odoql-csv'
+  # .use store
 
 # Shared components register against injectinto
 require './shared/'

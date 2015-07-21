@@ -8,19 +8,22 @@ ql = ql
   .use 'http'
   .use 'csv'
 
-xxx = component
+index = component
   query: (params) ->
-    test1: ql.concat('Hel', ql.if(ql.gt(6, 5), 'lo World', 'lo'))
-    test2: ql.localstorage 'test'
-    test3: ql.store 'users'
+    users: ql.store 'users'
+    long: (ql 'long'
+      .store()
+      .options(async: yes)
+      .query())
+    nulled: ql.literal null
   render: (state, params) ->
-    console.log state.test2
-    console.log state.test3
+    console.log state
     dom 'div', { attributes: class: 'wrapper' }, [
       svg 'svg', { attributes: class: 'logo' }, [
-        svg 'use', { 'xlink:href': "/dist/odojs-handbook-1.0.0.min.svg#odojs" }
+        svg 'use', { 'xlink:href': "/dist/odojs-handbook-1.0.0.min.svg#redwire" }
       ]
-      dom 'div', state.test1
+      (dom 'div', u.name for u in state.users ? [])...
+      dom 'div', state.long
     ]
 
-inject.bind 'page:default', xxx
+inject.bind 'page:default', index
