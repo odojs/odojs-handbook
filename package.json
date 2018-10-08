@@ -60,10 +60,10 @@
     "odoql-http": "^0.2.1",
     "odoql-json": "^1.0.0",
     "odoql-localstorage": "^1.0.0",
-    "odoql-time": "^0.1.0",
     "odoql-store": "^0.1.0",
+    "odoql-time": "^0.1.0",
     "page": "^1.6.1",
-    "superagent": "^1.2.0",
+    "superagent": "^4.0.0-beta.5",
     "svg4everybody": "^0.0.2"
   }
 }
